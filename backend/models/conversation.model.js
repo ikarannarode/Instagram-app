@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const conversationSchema = new mongoose.Schema({
-    participent: [{
+    participents: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
-    message: [{
+    messages: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Message"
     }]

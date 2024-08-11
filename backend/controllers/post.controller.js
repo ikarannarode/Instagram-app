@@ -213,6 +213,43 @@ export const deletePost = async (req, res) => {
         console.log(error);
     }
 }
+export const bookMarkPost = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const authorId = req.id;
+        const post = await Post.findById(findById);
+        if (!post) {
+            return res.status(404).json({
+                message: "Post not found",
+                success: false
+            })
+        }
+        const user = await User.findById(authorId);
+        if (user.bookmarks.includes(post._id)) {
+            // already bookmarked -> remove from the bookmarks
+            await user.updateOne({ $pull: { bookmarks: post._id } });
+            await user.save();
+            return res.status(200).json({
+                success: true,
+                type: "Unssaved",
+                message: "Post removed from bookmark"
+            })
+        }
+        else {
+            // I have to bookmark
+            await user.updateOne({ $addToSet: { bookmarks: post._id } });
+            await user.save();
+            return res.status(200).json({
+                success: true,
+                type: "Saved",
+                message: "Post added to bookmark"
+            })
+        }
 
+
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
