@@ -1,6 +1,6 @@
-import { User } from "../models/user.model";
+import { User } from "../models/user.model.js";
 import sharp from "sharp";
-import cloudinary from "../utils/cloudinary";
+import cloudinary from "../utils/cloudinary.js";
 import { Post } from "../models/post.model.js";
 
 export const addNewPost = async (req, res) => {
@@ -172,7 +172,7 @@ export const addComment = async (req, res) => {
 
 
 
-const getCommentsOfPost = async (req, res) => {
+export const getCommentsOfPost = async (req, res) => {
     try {
         const postId = req.params.id;
         const comments = await Comment.find({ post: postId }).populate('author', 'username , profilePicture');
