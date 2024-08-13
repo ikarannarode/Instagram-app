@@ -1,9 +1,18 @@
 .logo {
-    background-image: url('/public/asset 4.png');
+    background-image: url('/asset 4.png');
     background-position: 0px 0px;
     background-size: 176px 258px;
     width: 175px;
     height: 51px;
+    background-repeat: no-repeat;
+    display: inline-block;
+
+}
+
+.logo-content {
+    background-image: url('/asset 4.png');
+    background-position: 14px 2px;
+    background-size: 100px 140px;
     background-repeat: no-repeat;
     display: inline-block;
 

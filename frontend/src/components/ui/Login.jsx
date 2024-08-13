@@ -5,23 +5,21 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from './button';
 import { Loader2 } from 'lucide-react';
-function Signup() {
+function Login() {
+    const navigate = useNavigate();
     const [input, setInput] = useState({
-        username: "",
         email: "",
         password: ""
     });
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
     const changeEventHanlder = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
     }
-    const signupHandler = async (e) => {
+    const loginHandler = async (e) => {
         e.preventDefault();
-        console.log(input)
         try {
             setLoading(true);
-            const res = await axios.post("http://localhost:8000/api/v1/user/register", input, {
+            const res = await axios.post("http://localhost:8000/api/v1/user/login", input, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -29,9 +27,8 @@ function Signup() {
             });
             if (res.data.success) {
                 toast.success(res.data.message);
-                navigate("/login");
+                navigate("/");
                 setInput({
-                    username: "",
                     email: "",
                     password: ""
                 });
@@ -47,14 +44,12 @@ function Signup() {
     return (
         <>
             <div className='w-screen h-screen flex flex-col items-center gap-2 pt-3 '>
-                <form onSubmit={signupHandler} className='shadow-lg flex flex-col gap-5 p-8 w-[350px] border '>
+                <form onSubmit={loginHandler} className='shadow-lg flex flex-col gap-5 p-8 w-[350px] border '>
                     <div className='my-4 flex flex-col'>
                         <div className=' p-3 logo self-center'></div>
-                        <p className='text-slate-600 font-semibold text-center mt-2'>Sign up to see photos and videos from your friends.</p>
                     </div>
                     <div>
                         <input type="email" name="email" id="" value={input.email} onChange={changeEventHanlder} className=' my-2  focus-visible:border-gray-600 outline-none border-[1.6px] border-gray-400 w-full py-2.5 px-1.5 text-xs font-medium placeholder:font-normal placeholder:text-xs' placeholder='Mobile no or email address' />
-                        <input type="text" value={input.username} onChange={changeEventHanlder} name="username" id="" className=' my-2  focus-visible:border-gray-600 outline-none border-[1.6px] border-gray-400 w-full py-2.5 px-1.5 text-xs font-medium placeholder:font-normal placeholder:text-xs' placeholder='Username' />
                         <input type="password" name="password" value={input.password} onChange={changeEventHanlder} id="" className=' my-2  focus-visible:border-gray-600 outline-none border-[1.6px] border-gray-400 w-full py-2.5 px-1.5 font-medium text-xs placeholder:font-normal placeholder:text-xs' placeholder='Password' />
 
                     </div>
@@ -69,18 +64,18 @@ function Signup() {
                     </div>
                     {
                         loading ? (
-                            <Button className="bg-blue-300 hover:bg-blue-500 py-1.5 rounded-md cursor-no-drop">
+                            <Button className="bg-blue-300 hover:bg-blue-500 py-1.5 rounded-md">
                                 <Loader2 className='mr-2 h-4 animate-spin' />
                                 Loading...
                             </Button>
                         ) : (
-                            <button className='btn bg-blue-400 py-1 rounded-md text-white hover:bg-blue-500'>Sign up</button>
+                            <button className='btn bg-blue-400 py-1 rounded-md text-white hover:bg-blue-500'>Login</button>
                         )
                     }
                 </form>
 
                 <div className='shadow-lg flex flex-col gap-5 p-8 w-[350px] border'>
-                    <h5 className='text-center'>Have an account? <Link to="/login"><span className='text-blue-600 hover:cursor-pointer'>Log in</span></Link></h5>
+                    <h5 className='text-center'>Don't have an account? <Link to="/signup"><span className='text-blue-600 hover:cursor-pointer'>Sign up</span></Link></h5>
                 </div>
                 <div className='flex flex-col gap-5 pt-2 w-[350px]'>
                     <p className='font-normal text-center'>Get the app.</p>
@@ -115,4 +110,4 @@ function Signup() {
     )
 }
 
-export default Signup;
+export default Login;

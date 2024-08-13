@@ -30,7 +30,7 @@ export const register = async (req, res) => {
 
         return res.status(201).json({
             message: "User Signup Successfully",
-            success: false
+            success: true
         })
 
     } catch (error) {
@@ -66,7 +66,7 @@ export const login = async (req, res) => {
 
 
         const populatedPosts = await Promise.all(
-            user.posts.map(async (postId) => {
+            user.post.map(async (postId) => {
                 const post = await Post.findById(postId);
                 if (post.author.equals(user._id)) {
                     return post;
