@@ -6,14 +6,12 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/user.route.js";
 import postRoutes from "./routes/post.route.js";
 import messageRoutes from "./routes/message.route.js";
+import path from 'path';
 dotenv.config({});
-
-const app = express();
 const PORT = process.env.PORT || 3000;
+const app = express();
 
-app.get("/", (req, res) => {
-    res.send("Hello")
-})
+const _dirname = path.resolve();
 
 
 //middlewares
@@ -31,7 +29,6 @@ app.use(cors(corsOptions));
 app.use("/api/v1/user", userRoutes)
 app.use("/api/v1/post", postRoutes)
 app.use("/api/v1/message", messageRoutes)
-
 
 
 

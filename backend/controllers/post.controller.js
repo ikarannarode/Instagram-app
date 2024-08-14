@@ -1,15 +1,16 @@
-import { User } from "../models/user.model.js";
 import sharp from "sharp";
 import cloudinary from "../utils/cloudinary.js";
 import { Post } from "../models/post.model.js";
+import { User } from "../models/user.model.js";
+import { Comment } from "../models/comment.model.js";
 
 export const addNewPost = async (req, res) => {
     try {
         const { caption } = req.body;
         const image = req.file;
-        const autherid = req.id;
+        const authorid = req.id;
         if (!image) {
-            res.staus(401).json({ message: "image is required!" })
+            res.status(401).json({ message: "image is required!" })
         }
 
         const optimizedImageBuffer = await sharp(image.buffer)
@@ -22,18 +23,21 @@ export const addNewPost = async (req, res) => {
         const post = await Post.create({
             caption,
             image: cloudResponse.secure_url,
-            auhter: autherid
-        })
-        const user = await User.findById(autherid);
+            auhtor: authorid
+        });
+        const user = await User.findById(authorid);
 
         if (user) {
             user.post.push(post._id);
             await user.save();
         }
+        console.log(authorid);
         await post.populate({ path: 'author', select: "-password" });
-        return res.staus(201).json({
+        return res.status(201).json({
             message: "New post added",
-            post,
+            image: cloudResponse.secure_url,
+            caption,
+            id: post._id,
             success: true,
         })
 
@@ -43,7 +47,6 @@ export const addNewPost = async (req, res) => {
         console.log(error)
     }
 }
-
 
 export const getAllPost = async (req, res) => {
     try {
