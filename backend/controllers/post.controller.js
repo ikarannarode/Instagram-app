@@ -9,6 +9,8 @@ export const addNewPost = async (req, res) => {
         const { caption } = req.body;
         const image = req.file;
         const authorid = req.id;
+
+
         if (!image) {
             res.status(401).json({ message: "image is required!" })
         }
@@ -20,10 +22,11 @@ export const addNewPost = async (req, res) => {
 
         const fileUri = `data:image/jpeg;base64,${optimizedImageBuffer.toString('base64')}`;
         const cloudResponse = await cloudinary.uploader.upload(fileUri);
+
         const post = await Post.create({
             caption,
             image: cloudResponse.secure_url,
-            auhtor: authorid
+            author: authorid,
         });
         const user = await User.findById(authorid);
 
@@ -31,20 +34,16 @@ export const addNewPost = async (req, res) => {
             user.post.push(post._id);
             await user.save();
         }
-        console.log(authorid);
         await post.populate({ path: 'author', select: "-password" });
         return res.status(201).json({
             message: "New post added",
-            image: cloudResponse.secure_url,
-            caption,
-            id: post._id,
             success: true,
         })
 
 
 
     } catch (error) {
-        console.log(error)
+        res.json(error)
     }
 }
 
