@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react'
 import { Dialog, DialogContent, DialogHeader } from './dialog';
-import { Avatar, AvatarImage } from './avatar';
-import { AvatarFallback } from '@radix-ui/react-avatar';
+import { Avatar, AvatarImage, AvatarFallback } from './avatar';
 import { Textarea } from './textarea';
 import { Button } from './button';
+
 import { readFileAsDataURL } from '@/lib/utils';
 import { CloudCog, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -15,6 +15,7 @@ function CreatePost({ open, setOpen }) {
     const [caption, setCaption] = useState("");
     const [imagePreview, setImagePreview] = useState("");
     const [loading, setLoading] = useState(false);
+
     const fileChangeHandler = async (e) => {
         const file = e.target.files?.[0];
         if (file) {
