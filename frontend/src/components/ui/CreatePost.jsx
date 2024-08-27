@@ -69,7 +69,7 @@ function CreatePost({ open, setOpen }) {
                         <img src={imagePreview} alt="preview_img" className='object-cover h-full w-full rounded-md' />
                     </div>)
                 }
-                <input type="file" ref={imageRef} className='hidden' onChange={fileChangeHandler} />
+                <input type="file" ref={imageRef} name='image' className='hidden' onChange={fileChangeHandler} />
 
                 <Button onClick={() => imageRef.current.click()} className='w-fit mx-auto bg-[#0095F6] hover:bg-[#0081d8] py-2'>Select from Computer</Button>
                 {
