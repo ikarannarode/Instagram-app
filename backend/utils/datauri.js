@@ -8,4 +8,4 @@ const getDataUri = (file) => {
     return parser.format(extName, file.buffer).content;
 };
 export default getDataUri;
-
+import mongoose from "mongoose";
