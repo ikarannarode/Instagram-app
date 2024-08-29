@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import CreatePost from './CreatePost'
+import { CreatePost } from './CreatePost'
 
 function LeftSidebar() {
     const navigate = useNavigate();
